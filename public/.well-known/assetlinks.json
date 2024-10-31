@@ -1,0 +1,14 @@
+[
+    {
+      "relation": [
+        "delegate_permission/common.handle_all_urls"
+      ],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.seecard",
+        "sha256_cert_fingerprints": [
+          "EF:05:B2:BA:CA:98:03:1C:08:17:23:0E:DC:75:A6:70:6E:C9:53:F3:FB:27:23:26:7D:EB:D4:D5:62:91:8B:EC"
+        ]
+      }
+    }
+  ]
