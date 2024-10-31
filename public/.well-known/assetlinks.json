@@ -5,9 +5,12 @@
       ],
       "target": {
         "namespace": "android_app",
-        "package_name": "com.seecardx",
+        "package_name": "com.seecard",
         "sha256_cert_fingerprints": [
-          "D5:C8:EE:BF:F0:62:C3:E4:0C:90:02:23:9D:52:9C:4F:1B:36:8B:7B:EA:22:0D:08:CE:4E:E0:66:C1:5C:31:66"
+          "D5:C8:EE:BF:F0:62:C3:E4:0C:90:02:23:9D:52:9C:4F:1B:36:8B:7B:EA:22:0D:08:CE:4E:E0:66:C1:5C:31:66",
+          "FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C",
+          "69:A9:E2:84:AC:55:B2:BF:EC:9C:C6:85:EF:8F:CF:AF:D6:A1:B8:17:D6:9D:58:F8:28:37:E5:0F:94:31:95:CD",
+          "EF:05:B2:BA:CA:98:03:1C:08:17:23:0E:DC:75:A6:70:6E:C9:53:F3:FB:27:23:26:7D:EB:D4:D5:62:91:8B:EC"
         ]
       }
     }
