@@ -10,7 +10,7 @@ export default function Home() {
 
    // Function to open app or fallback to store
    const redirectToApp = () => {
-    let fallbackLink = "https://yourapp.com/download"; // Replace with actual download page
+    let fallbackLink = "https://deeplink-kappa.vercel.app"; // Replace with actual download page
 
     if (isiOS() || isAndroid()) {
       window.location.href = "mychat://open"; // Your custom scheme for the app
