@@ -32,7 +32,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    redirectToApp(); // Run the function on page load
+    // redirectToApp(); // Run the function on page load
   }, []);
 
   return (
