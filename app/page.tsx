@@ -9,31 +9,28 @@ const isAndroid = () => /Android/i.test(navigator.userAgent);
 export default function Home() {
 
    // Function to open app or fallback to store
-   const redirectToApp = () => {
-    let fallbackLink = "https://deeplink-kappa.vercel.app"; // Replace with actual download page
+  //  const redirectToApp = () => {
+  //   let fallbackLink = "https://deeplink-kappa.vercel.app"; 
 
-    if (isiOS() || isAndroid()) {
-      window.location.href = "mychat://open"; // Your custom scheme for the app
+  //   if (isiOS() || isAndroid()) {
+  //     window.location.href = "mychat://open";
+  //     const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.test.android";
+  //     const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
+  //     fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
 
-      // Store links
-      const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.test.android";
-      const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
-      fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
+  //     setTimeout(() => {
+  //       if (document.hasFocus()) {
+  //         window.location.href = fallbackLink; 
+  //       }
+  //     }, 1000);
+  //   } else {
+  //     window.location.href = fallbackLink;
+  //   }
+  // };
 
-      setTimeout(() => {
-        if (document.hasFocus()) {
-          window.location.href = fallbackLink; // Redirect if app is not opened
-        }
-      }, 1000); // Delay as needed
-    } else {
-      // Redirect to download page for non-mobile users
-      window.location.href = fallbackLink;
-    }
-  };
-
-  useEffect(() => {
-    // redirectToApp(); // Run the function on page load
-  }, []);
+  // useEffect(() => {
+  //   redirectToApp(); 
+  // }, []);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
