@@ -25,8 +25,8 @@ export default function Home() {
         <h1>Open MyChat App</h1>
         <a href="mychat://open">Open App</a>
 
-        <h1>Open MyChat App2</h1>
-        <a href="intent://open#Intent;scheme=mychat;package=com.seecard;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.seecard;end;">
+        <h1>MyChat Open App </h1>
+        <a href="mychat://open#Intent;scheme=mychat;package=com.seecard;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.seecard;end;">
           Open App2
         </a>
         <p>If the app is not installed, nothing will happen.</p>
