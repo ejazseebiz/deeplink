@@ -10,5 +10,8 @@
         ] 
       } 
     ] 
-  } 
+  } ,
+  "webcredentials": {
+     "apps": [ "CS5T98P223.com.seecard.marketplace" ]
+  }
 } 
