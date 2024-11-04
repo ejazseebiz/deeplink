@@ -1,5 +1,5 @@
-"use client"
-import { useEffect } from "react";
+// "use client"
+// import { useEffect } from "react";
 import Image from "next/image";
 
 // Helper function for device detection
