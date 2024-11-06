@@ -1,8 +1,5 @@
 // "use client"
 // import { useEffect } from "react";
-import Image from "next/image";
-
-
 
 export default function Home() {
 
@@ -42,8 +39,11 @@ export default function Home() {
 
         <h1>Open Universal Link</h1>
         <a href="https://deeplink-kappa.vercel.app/">Open Link</a>
+        <hr  />
+
         <h1>Open MyChat App</h1>
         <a href="mychat://open">Open App</a>
+        <hr  />
 
         <h1>MyChat Open App </h1>
         <a href="mychat://open#Intent;scheme=mychat;package=com.seecard;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.seecard;end;">
