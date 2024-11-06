@@ -2,11 +2,14 @@
 // import { useEffect } from "react";
 import Image from "next/image";
 
-// Helper function for device detection
-// const isiOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent);
-// const isAndroid = () => /Android/i.test(navigator.userAgent);
+
 
 export default function Home() {
+
+
+  // Helper function for device detection
+  // const isiOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  // const isAndroid = () => /Android/i.test(navigator.userAgent);
 
    // Function to open app or fallback to store
   //  const redirectToApp = () => {
@@ -54,6 +57,8 @@ export default function Home() {
           </li>
           <li>Save and see your changes instantly.</li>
         </ol>
+        <h1>Open Universal Link</h1>
+        <a href="https://deeplink-kappa.vercel.app/">Open Link</a>
         <h1>Open MyChat App</h1>
         <a href="mychat://open">Open App</a>
 
