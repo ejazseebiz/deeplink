@@ -50,6 +50,8 @@ export default function Home() {
           Open App2
         </a>
         <p>If the app is not installed, nothing will happen.</p>
+
+        abi 
       </main>
     </div>
   );
