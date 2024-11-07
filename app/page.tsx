@@ -15,7 +15,7 @@ export default function Home() {
     let fallbackLink = "https://deeplink-kappa.vercel.app"; 
 
     if (isiOS() || isAndroid()) {
-      alert("Mobile");
+      
       window.location.href = "mychat://open";
       const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.test.android";
       const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
@@ -23,6 +23,7 @@ export default function Home() {
 
       setTimeout(() => {
         if (document.hasFocus()) {
+          alert("Focused");
           window.location.href = fallbackLink; 
           setIsInstalled(false);
         }
