@@ -34,14 +34,25 @@ export default function Home() {
   // };
 
 
-  const redirectToApp = () => {
+  const redirectToApp = async () => {
     let fallbackLink = "https://deeplink-kappa.vercel.app"; 
 
     if (isiOS() || isAndroid()) {
       const appUrl = "mychat://open";
-      const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.test.android";
+      const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.seecard";
       const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
       fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
+
+      const relatedApps = await navigator.getInstalledRelatedApps();
+      console.table(relatedApps);
+      const psApp = relatedApps.find((app) => app.id === "com.seecard");
+
+      if (psApp && doesVersionSendPushMessages(psApp.version)) {
+        alert("App Installed")
+        // There's an installed platform-specific app that handles sending push messages
+        // No need to handle this via the web app
+        return;
+      }
 
       let appOpened = false;
 
