@@ -37,57 +37,65 @@ export default function Home() {
   //   getInstalledRelatedApps?: () => Promise<Array<{ id: string; version: string }>>;
   // }
 
-  const redirectToApp = async () => {
-    let fallbackLink = "https://deeplink-kappa.vercel.app"; 
+  // const redirectToApp = async () => {
+  //   let fallbackLink = "https://deeplink-kappa.vercel.app"; 
 
+  //   if (isiOS() || isAndroid()) {
+  //     const appUrl = "mychat://open";
+  //     const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.seecard";
+  //     const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
+  //     fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
+
+
+
+  //     let appOpened = false;
+
+  //     // Listen for blur event to detect if app opened
+  //     const handleBlur = () => {
+  //       appOpened = true;
+  //       window.removeEventListener('blur', handleBlur); // Clean up event listener
+  //     };
+
+  //     // Attach the blur event listener
+  //     window.addEventListener('blur', handleBlur);
+
+  //     // Attempt to open the app
+  //    const urlV =   window.location.href = appUrl;
+  //     alert(urlV);
+  //     // Set a timeout to check if the app was not opened
+  //     setTimeout(() => {
+  //       if (!appOpened) {
+  //         // App did not open, so navigate to the app store
+  //         window.location.href = fallbackLink;
+  //         setIsInstalled(false);
+  //       }
+  //     }, 1000); // Adjust timeout if needed
+  //   } else {
+
+  //   }
+  // };
+
+  function redirectToApp() {
+    let fallbackLink = 'https://yourapp.com/download';
+
+    // isiOS isAndroid implement by yourself
     if (isiOS() || isAndroid()) {
-      const appUrl = "mychat://open";
-      const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.seecard";
-      const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
-      fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
+        window.location = 'mychat://';
 
-if ('getInstalledRelatedApps' in navigator) {
-  const relatedApps = await navigator.getInstalledRelatedApps();
-  console.table(relatedApps);
-  const psApp = relatedApps.find((app) => app.id === "com.seecard");
-
-  if (psApp && doesVersionSendPushMessages(psApp.version)) {
-    alert("App Installed");
-    // There's an installed platform-specific app that handles sending push messages
-    return;
-  }
-} else {
-  console.warn('getInstalledRelatedApps is not supported in this browser');
-}
-
-
-      let appOpened = false;
-
-      // Listen for blur event to detect if app opened
-      const handleBlur = () => {
-        appOpened = true;
-        window.removeEventListener('blur', handleBlur); // Clean up event listener
-      };
-
-      // Attach the blur event listener
-      window.addEventListener('blur', handleBlur);
-
-      // Attempt to open the app
-     const urlV =   window.location.href = appUrl;
-      alert(urlV);
-      // Set a timeout to check if the app was not opened
-      setTimeout(() => {
-        if (!appOpened) {
-          // App did not open, so navigate to the app store
-          window.location.href = fallbackLink;
-          setIsInstalled(false);
-        }
-      }, 1000); // Adjust timeout if needed
-    } else {
-      // Fallback for non-mobile devices (PC)
-      // window.location.href = fallbackLink;
+        const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.test.android';
+        const iosAppStoreLink = 'itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8';
+        fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
+        // setTimeout still executes after the app is opened, so the current page will navigate to the fallback link
+        // to prevent this, I use the document.hasFocus function to check
+        setTimeout(function () {
+            // if the app is opened, the document won't be focused
+            // so if app is not installed, the document will be focused
+            if (document.hasFocus()) {
+                window.location = fallbackLink;
+            }
+        }, 1000);
     }
-  };
+}
 
   useEffect(() => {
     redirectToApp(); 
