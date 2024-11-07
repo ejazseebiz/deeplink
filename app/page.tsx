@@ -11,28 +11,27 @@ export default function Home() {
   const isAndroid = () => /Android/i.test(navigator.userAgent);
 
    // Function to open app or fallback to store
-   const redirectToAppXXX = () => {
-    let fallbackLink = "https://deeplink-kappa.vercel.app"; 
+  //  const redirectToAppXXX = () => {
+  //   let fallbackLink = "https://deeplink-kappa.vercel.app"; 
 
-    if (isiOS() || isAndroid()) {
+  //   if (isiOS() || isAndroid()) {
       
-      window.location.href = "mychat://open";
-      const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.test.android";
-      const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
-      fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
+  //     window.location.href = "mychat://open";
+  //     const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.test.android";
+  //     const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
+  //     fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
 
-      setTimeout(() => {
-        if (document.hasFocus()) {
-          alert("Focused");
-          window.location.href = fallbackLink; 
-          setIsInstalled(false);
-        }
-      }, 1000);
-    } else {
-      // alert("PC");
-      // window.location.href = fallbackLink;
-    }
-  };
+  //     setTimeout(() => {
+  //       if (document.hasFocus()) {
+  //         alert("Focused");
+  //         window.location.href = fallbackLink; 
+  //         setIsInstalled(false);
+  //       }
+  //     }, 1000);
+  //   } else {
+  //     window.location.href = fallbackLink;
+  //   }
+  // };
 
 
   const redirectToApp = () => {
