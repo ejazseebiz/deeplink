@@ -33,6 +33,9 @@ export default function Home() {
   //   }
   // };
 
+  interface Navigator {
+    getInstalledRelatedApps?: () => Promise<Array<{ id: string; version: string }>>;
+  }
 
   const redirectToApp = async () => {
     let fallbackLink = "https://deeplink-kappa.vercel.app"; 
@@ -43,16 +46,20 @@ export default function Home() {
       const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
       fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
 
-      const relatedApps = await navigator.getInstalledRelatedApps();
-      console.table(relatedApps);
-      const psApp = relatedApps.find((app) => app.id === "com.seecard");
+if ('getInstalledRelatedApps' in navigator) {
+  const relatedApps = await navigator.getInstalledRelatedApps();
+  console.table(relatedApps);
+  const psApp = relatedApps.find((app) => app.id === "com.seecard");
 
-      if (psApp && doesVersionSendPushMessages(psApp.version)) {
-        alert("App Installed")
-        // There's an installed platform-specific app that handles sending push messages
-        // No need to handle this via the web app
-        return;
-      }
+  if (psApp && doesVersionSendPushMessages(psApp.version)) {
+    alert("App Installed");
+    // There's an installed platform-specific app that handles sending push messages
+    return;
+  }
+} else {
+  console.warn('getInstalledRelatedApps is not supported in this browser');
+}
+
 
       let appOpened = false;
 
