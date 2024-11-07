@@ -80,7 +80,7 @@ export default function Home() {
 
     // isiOS isAndroid implement by yourself
     if (isiOS() || isAndroid()) {
-        window.location = 'mychat://';
+        window.location.href = 'mychat://';
 
         const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.test.android';
         const iosAppStoreLink = 'itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8';
@@ -91,7 +91,7 @@ export default function Home() {
             // if the app is opened, the document won't be focused
             // so if app is not installed, the document will be focused
             if (document.hasFocus()) {
-                window.location = fallbackLink;
+                window.location.href = fallbackLink;
                 setIsInstalled(false);
             }
         }, 1000);
