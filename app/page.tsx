@@ -38,7 +38,7 @@ export default function Home() {
   useEffect(() => {
     const checkAppInstalled = () => {
         const appUrl = 'whatsapp://';
-        const fallbackUrl = 'https://play.google.com/store/apps/details?id=com.whatsapp';
+        // const fallbackUrl = 'https://play.google.com/store/apps/details?id=com.whatsapp';
 
         // Try to open the app
         window.location.href = appUrl;
