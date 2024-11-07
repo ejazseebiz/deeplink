@@ -55,8 +55,8 @@ export default function Home() {
       window.addEventListener('blur', handleBlur);
 
       // Attempt to open the app
-      window.location.href = appUrl;
-
+     const urlV =   window.location.href = appUrl;
+      alert(urlV);
       // Set a timeout to check if the app was not opened
       setTimeout(() => {
         if (!appOpened) {
