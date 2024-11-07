@@ -92,6 +92,7 @@ export default function Home() {
             // so if app is not installed, the document will be focused
             if (document.hasFocus()) {
                 window.location = fallbackLink;
+                setIsInstalled(false);
             }
         }, 1000);
     }
