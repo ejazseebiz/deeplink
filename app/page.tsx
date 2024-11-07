@@ -4,65 +4,68 @@ import Link from 'next/link';
 
 export default function Home() {
 
+  const [isInstalled, setIsInstalled] = useState(true);
 
   // Helper function for device detection
-  // const isiOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  // const isAndroid = () => /Android/i.test(navigator.userAgent);
+  const isiOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isAndroid = () => /Android/i.test(navigator.userAgent);
 
    // Function to open app or fallback to store
-  //  const redirectToApp = () => {
-  //   let fallbackLink = "deeplink-kappa.vercel.app"; 
+   const redirectToApp = () => {
+    let fallbackLink = "https://deeplink-kappa.vercel.app"; 
 
-  //   if (isiOS() || isAndroid()) {
-  //     window.location.href = "mychat://open";
-  //     const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.test.android";
-  //     const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
-  //     fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
+    if (isiOS() || isAndroid()) {
+      alert("Mobile");
+      window.location.href = "mychat://open";
+      const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.test.android";
+      const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
+      fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
 
-  //     setTimeout(() => {
-  //       if (document.hasFocus()) {
-  //         window.location.href = fallbackLink; 
-  //       }
-  //     }, 1000);
-  //   } else {
-  //     window.location.href = fallbackLink;
-  //   }
-  // };
+      setTimeout(() => {
+        if (document.hasFocus()) {
+          window.location.href = fallbackLink; 
+          setIsInstalled(false);
+        }
+      }, 1000);
+    } else {
+      // alert("PC");
+      // window.location.href = fallbackLink;
+    }
+  };
 
-  // useEffect(() => {
-  //   redirectToApp(); 
-  // }, []);
-
-
-  const [isInstalled, setIsInstalled] = useState(false);
   useEffect(() => {
-    const checkAppInstalled = () => {
-        const appUrl = 'mychat://open';
+    redirectToApp(); 
+  }, []);
+
+
+//   useEffect(() => {
+//     const checkAppInstalled = () => {
+//         const appUrl = 'mychat://open';
         
-        // const fallbackUrl = 'https://play.google.com/store/apps/details?id=com.whatsapp';
+//         // const fallbackUrl = 'https://play.google.com/store/apps/details?id=com.whatsapp';
 
-        // Try to open the app
-        window.location.href = appUrl;
+//         // Try to open the app
+//         window.location.href = appUrl;
 
-        // If the app doesn’t open, display the download option
-        const timeout = setTimeout(() => {
-            setIsInstalled(false);
-        }, 1000);
+//         // If the app doesn’t open, display the download option
+//         const timeout = setTimeout(() => {
+//             setIsInstalled(false);
+//         }, 1000);
 
-        // If the app is installed, handle the "blur" event
-        window.addEventListener('blur', () => {
+//         // If the app is installed, handle the "blur" event
+//         window.addEventListener('blur', () => {
 
-            clearTimeout(timeout);
-            setIsInstalled(true);
-            alert("Blur")
-        });
+//             clearTimeout(timeout);
+//             setIsInstalled(true);
+//             alert("Blur")
+//         });
 
-        // Cleanup event listener on unmount
-        return () => window.removeEventListener('blur', () => setIsInstalled(true));
-    };
+//         // Cleanup event listener on unmount
+//         return () => window.removeEventListener('blur', () => setIsInstalled(true));
+//     };
 
-    checkAppInstalled();
-}, []);
+//     checkAppInstalled();
+// }, []);
 
 
   return (
