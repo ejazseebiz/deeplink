@@ -11,7 +11,7 @@ export default function Home() {
   const isAndroid = () => /Android/i.test(navigator.userAgent);
 
    // Function to open app or fallback to store
-   const redirectToApp = () => {
+   const redirectToAppXXX = () => {
     let fallbackLink = "https://deeplink-kappa.vercel.app"; 
 
     if (isiOS() || isAndroid()) {
@@ -31,6 +31,44 @@ export default function Home() {
     } else {
       // alert("PC");
       // window.location.href = fallbackLink;
+    }
+  };
+
+
+  const redirectToApp = () => {
+    let fallbackLink = "https://deeplink-kappa.vercel.app"; 
+
+    if (isiOS() || isAndroid()) {
+      const appUrl = "mychat://open";
+      const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.test.android";
+      const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
+      fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
+
+      let appOpened = false;
+
+      // Listen for blur event to detect if app opened
+      const handleBlur = () => {
+        appOpened = true;
+        window.removeEventListener('blur', handleBlur); // Clean up event listener
+      };
+
+      // Attach the blur event listener
+      window.addEventListener('blur', handleBlur);
+
+      // Attempt to open the app
+      window.location.href = appUrl;
+
+      // Set a timeout to check if the app was not opened
+      setTimeout(() => {
+        if (!appOpened) {
+          // App did not open, so navigate to the app store
+          window.location.href = fallbackLink;
+          setIsInstalled(false);
+        }
+      }, 1000); // Adjust timeout if needed
+    } else {
+      // Fallback for non-mobile devices (PC)
+      window.location.href = fallbackLink;
     }
   };
 
