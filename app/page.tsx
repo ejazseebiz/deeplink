@@ -67,7 +67,7 @@ export default function Home() {
       }, 1000); // Adjust timeout if needed
     } else {
       // Fallback for non-mobile devices (PC)
-      window.location.href = fallbackLink;
+      // window.location.href = fallbackLink;
     }
   };
 
