@@ -10,7 +10,7 @@ export default function Home() {
 
    // Function to open app or fallback to store
   //  const redirectToApp = () => {
-  //   let fallbackLink = "https://deeplink-kappa.vercel.app"; 
+  //   let fallbackLink = "deeplink-kappa.vercel.app"; 
 
   //   if (isiOS() || isAndroid()) {
   //     window.location.href = "mychat://open";
@@ -51,7 +51,6 @@ export default function Home() {
         </a>
         <p>If the app is not installed, nothing will happen.</p>
 
-        abi 
       </main>
     </div>
   );
