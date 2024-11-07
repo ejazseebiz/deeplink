@@ -37,43 +37,8 @@ export default function Home() {
   //   getInstalledRelatedApps?: () => Promise<Array<{ id: string; version: string }>>;
   // }
 
-  // const redirectToApp = async () => {
-  //   let fallbackLink = "https://deeplink-kappa.vercel.app"; 
 
-  //   if (isiOS() || isAndroid()) {
-  //     const appUrl = "mychat://open";
-  //     const androidAppStoreLink = "https://play.google.com/store/apps/details?id=com.seecard";
-  //     const iosAppStoreLink = "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
-  //     fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
-
-
-
-  //     let appOpened = false;
-
-  //     // Listen for blur event to detect if app opened
-  //     const handleBlur = () => {
-  //       appOpened = true;
-  //       window.removeEventListener('blur', handleBlur); // Clean up event listener
-  //     };
-
-  //     // Attach the blur event listener
-  //     window.addEventListener('blur', handleBlur);
-
-  //     // Attempt to open the app
-  //    const urlV =   window.location.href = appUrl;
-  //     alert(urlV);
-  //     // Set a timeout to check if the app was not opened
-  //     setTimeout(() => {
-  //       if (!appOpened) {
-  //         // App did not open, so navigate to the app store
-  //         window.location.href = fallbackLink;
-  //         setIsInstalled(false);
-  //       }
-  //     }, 1000); // Adjust timeout if needed
-  //   } else {
-
-  //   }
-  // };
+  
 
   function redirectToApp() {
     let fallbackLink = 'https://yourapp.com/download';
@@ -82,12 +47,14 @@ export default function Home() {
     if (isiOS() || isAndroid()) {
         window.location.href = 'mychat://';
 
-        const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.test.android';
-        const iosAppStoreLink = 'itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8';
+        // const iosAppStoreLink = 'itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8';
+        const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
+        const iosAppStoreLink = 'https://apps.apple.com/np/app/seebiz/id1624880662';
+       
         fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
         // setTimeout still executes after the app is opened, so the current page will navigate to the fallback link
         // to prevent this, I use the document.hasFocus function to check
-        setTimeout(function () {
+        const timeout = setTimeout(function () {
             // if the app is opened, the document won't be focused
             // so if app is not installed, the document will be focused
             if (document.hasFocus()) {
@@ -95,6 +62,14 @@ export default function Home() {
                 setIsInstalled(false);
             }
         }, 1000);
+
+                // If the app is installed, handle the "blur" event
+        window.addEventListener('blur', () => {
+
+            clearTimeout(timeout);
+            setIsInstalled(true);
+            // alert("Blur")
+        });
     }
 }
 
