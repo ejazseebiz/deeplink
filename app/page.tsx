@@ -34,7 +34,7 @@ export default function Home() {
   // }, []);
 
 
-  const [isInstalled, setIsInstalled] = useState(null);
+  const [isInstalled, setIsInstalled] = useState(false);
   useEffect(() => {
     const checkAppInstalled = () => {
         const appUrl = 'whatsapp://';
