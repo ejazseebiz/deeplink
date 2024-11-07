@@ -38,6 +38,7 @@ export default function Home() {
   useEffect(() => {
     const checkAppInstalled = () => {
         const appUrl = 'mychat://open';
+        
         // const fallbackUrl = 'https://play.google.com/store/apps/details?id=com.whatsapp';
 
         // Try to open the app
@@ -50,8 +51,10 @@ export default function Home() {
 
         // If the app is installed, handle the "blur" event
         window.addEventListener('blur', () => {
+
             clearTimeout(timeout);
             setIsInstalled(true);
+            alert("Blur")
         });
 
         // Cleanup event listener on unmount
@@ -69,7 +72,7 @@ export default function Home() {
       <h1>{isInstalled === false ? "Looks like you don't have WhatsApp installed!" : "Checking WhatsApp installation..."}</h1>
             {isInstalled === null ? null : (
                 <button
-                    onClick={() => window.location.href = isInstalled ? 'whatsapp://' : 'https://play.google.com/store/apps/details?id=com.whatsapp'}
+                    onClick={() => window.location.href = isInstalled ? 'mychat://open' : 'https://play.google.com/store/apps/details?id=com.seecard'}
                     
                 >
                     {isInstalled ? "Open App" : "Download"}
