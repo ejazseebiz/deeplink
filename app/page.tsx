@@ -37,7 +37,7 @@ export default function Home() {
   const [isInstalled, setIsInstalled] = useState(false);
   useEffect(() => {
     const checkAppInstalled = () => {
-        const appUrl = 'whatsapp://';
+        const appUrl = 'mychat://open';
         // const fallbackUrl = 'https://play.google.com/store/apps/details?id=com.whatsapp';
 
         // Try to open the app
