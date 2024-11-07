@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Home() {
 
-  const [isInstalled, setIsInstalled] = useState(true);
+  const [isInstalled, setIsInstalled] = useState(false);
 
   // Helper function for device detection
   const isiOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent);
