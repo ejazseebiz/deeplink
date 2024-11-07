@@ -33,9 +33,9 @@ export default function Home() {
   //   }
   // };
 
-  interface Navigator {
-    getInstalledRelatedApps?: () => Promise<Array<{ id: string; version: string }>>;
-  }
+  // interface Navigator {
+  //   getInstalledRelatedApps?: () => Promise<Array<{ id: string; version: string }>>;
+  // }
 
   const redirectToApp = async () => {
     let fallbackLink = "https://deeplink-kappa.vercel.app"; 
