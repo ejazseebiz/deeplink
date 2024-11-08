@@ -47,9 +47,9 @@ export default function Home() {
     if (isiOS() || isAndroid()) {
         window.location.href = 'mychat://';
 
-        // const iosAppStoreLink = 'itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8';
         const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
         const iosAppStoreLink = 'https://apps.apple.com/np/app/seebiz/id1624880662';
+        // const iosAppStoreLink = 'itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8';
        
         fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
         // setTimeout still executes after the app is opened, so the current page will navigate to the fallback link
@@ -135,7 +135,7 @@ export default function Home() {
 <hr />
 
         <h1>Open Universal Link</h1>
-        <a href="https://deeplink-kappa.vercel.app/">Open Link</a>
+        <a href="https://deeplink-kappa.vercel.app/" target="_blank">Open Link</a>
         <hr  />
 
         <h1>Open MyChat App</h1>
