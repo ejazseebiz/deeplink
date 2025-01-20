@@ -78,6 +78,39 @@ export default function Home() {
   }, []);
 
 
+  const openAndSaveCard = (card_id:any,card_owner_id:any) =>{
+
+    let fallbackLink = '';
+
+    // isiOS isAndroid implement by yourself
+    if (isiOS() || isAndroid()) {
+      // const card_id = "677e036bee9675ee44b3dc65"
+      // const card_owner_id = "677e01aeee9675ee44b3dc43"
+
+      const card_for_saved = {
+        "cardId":card_id,
+        "ownerId":card_owner_id
+      }
+      console.log("=-=-card_for_saved",card_for_saved)
+      const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
+        window.location.href = `saveseecard://open?id=${encodedData}`;
+        const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
+        const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
+        fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
+        const timeout = setTimeout(function () {
+            if (document.hasFocus()) {
+              window.location.href = fallbackLink;
+            }
+        }, 2000);
+
+        window.addEventListener('blur', () => {
+            clearTimeout(timeout);;
+        });
+    } else {
+      alert("Your device doesn't support deep linking for this app.");
+    }
+  }
+
 //   useEffect(() => {
 //     const checkAppInstalled = () => {
 //         const appUrl = 'mychat://open';
@@ -137,6 +170,14 @@ export default function Home() {
         <h1>Open Universal Link</h1>
         <a href="https://deeplink-kappa.vercel.app/" target="_blank">Open Link</a>
         <hr  />
+
+
+        <div>
+                        <div className="cIcon ml-10 purpleBg" onClick={()=>{openAndSaveCard('cardInfo?._id','cardInfo?.owner')}}>
+                        </div>
+                        <p className="container-text">Save Card</p>
+                      </div>
+
 
         <h1>Open MyChat App</h1>
         <a href="mychat://open">Open App</a>
