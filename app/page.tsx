@@ -10,7 +10,7 @@ export default function Home() {
   const openAndSaveCard = () => {
     try {
       let fallbackLink = '';
-  
+      alert(isiOS());
       if (isiOS() || isAndroid()) {
         const card_id = "677e036bee9675ee44b3dc65";
         const card_owner_id = "677e01aeee9675ee44b3dc43";
