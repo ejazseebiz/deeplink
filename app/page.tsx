@@ -7,10 +7,9 @@ export default function Home() {
   const isAndroid = () => /Android/i.test(navigator.userAgent);
 
   const isiOS = () => {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    return /iPhone|iPad|iPod/.test(userAgent) && !window.MSStream;
+    const userAgent = navigator.userAgent || navigator.vendor;
+    return /iPhone|iPad|iPod/.test(userAgent);
   };
-
   
   const openAndSaveCard = () => {
     try {
