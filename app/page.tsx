@@ -3,20 +3,27 @@
 export default function Home() {
 
   // Helper function for device detection
-  const isiOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  // const isiOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent);
   const isAndroid = () => /Android/i.test(navigator.userAgent);
 
+  const isiOS = () => {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    return /iPhone|iPad|iPod/.test(userAgent) && !window.MSStream;
+  };
 
+  
   const openAndSaveCard = () => {
     try {
       let fallbackLink = '';
       alert(isiOS());
 
-      alert(navigator.userAgent);
-      alert(navigator.platform);
 
 
       if (isiOS() || isAndroid()) {
+
+        alert(navigator.userAgent);
+        alert(navigator.platform);
+  
         const card_id = "677e036bee9675ee44b3dc65";
         const card_owner_id = "677e01aeee9675ee44b3dc43";
   
@@ -47,6 +54,7 @@ export default function Home() {
         alert("Your device doesn't support deep linking for this app.");
       }
     } catch (e) {
+      alert("sssss");
       console.log("catch error print -------------------", JSON.stringify(e));
     }
   };
