@@ -16,13 +16,11 @@ export default function Home() {
       let fallbackLink = '';
       alert(isiOS());
 
-
+      alert(navigator.userAgent);
+      alert(navigator.platform);
 
       if (isiOS() || isAndroid()) {
 
-        alert(navigator.userAgent);
-        alert(navigator.platform);
-  
         const card_id = "677e036bee9675ee44b3dc65";
         const card_owner_id = "677e01aeee9675ee44b3dc43";
   
