@@ -18,10 +18,10 @@ export default function Home() {
   const openAndSaveCard = () => {
     try {
       let fallbackLink = '';
-      // alert(isiOS());
+      alert(isiOS());
 
-      // alert(navigator.userAgent);
-      // alert(navigator.platform);
+      alert(navigator.userAgent);
+      alert(navigator.platform);
 
       if (isiOS() || isAndroid()) {
 
@@ -35,40 +35,27 @@ export default function Home() {
   
         console.log("=-=-card_for_saved", card_for_saved);
         const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
-        // window.location.href = `saveseecard://open?id=${encodedData}`;
-        const universalLink = `https://deeplink-kappa.vercel.app/saveseecard?id=${encodedData}`;
-
+        window.location.href = `saveseecard://open?id=${encodedData}`;
+  
         // App Store / Play Store links
         const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
         const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
         fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
   
-              // Open Universal Link for iOS
-      if (isiOS()) {
-        window.location.href = universalLink;
-      } else {
-        window.location.href = `saveseecard://open?id=${encodedData}`;
-      }
-
-            // If deep link fails, open App Store
-            setTimeout(() => {
-              window.location.href = fallbackLink;
-            }, 2000);
-
-        // // Delay the fallback
-        // const timeout = setTimeout(() => {
-        //   if (document.visibilityState === "visible") {
-        //     window.open(fallbackLink, "_blank"); // Open App Store in a new tab
-        //   }
-        // }, 2000);
+        // Delay the fallback
+        const timeout = setTimeout(() => {
+          if (document.visibilityState === "visible") {
+            window.open(fallbackLink, "_blank"); // Open App Store in a new tab
+          }
+        }, 2000);
   
-        // // If user switches to another app (app is installed), cancel the timeout
-        // window.addEventListener('blur', () => clearTimeout(timeout));
+        // If user switches to another app (app is installed), cancel the timeout
+        window.addEventListener('blur', () => clearTimeout(timeout));
       } else {
         alert("Your device doesn't support deep linking for this app.");
       }
     } catch (e) {
- 
+      alert("sssss");
       console.log("catch error print -------------------", JSON.stringify(e));
     }
   };
