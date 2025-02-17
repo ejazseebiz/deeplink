@@ -19,8 +19,8 @@ export default function Home() {
 
       // isiOS isAndroid implement by yourself
       if (isiOS() || isAndroid()) {
-        // const card_id = "677e036bee9675ee44b3dc65"
-        // const card_owner_id = "677e01aeee9675ee44b3dc43"
+        const card_id = "677e036bee9675ee44b3dc65"
+        const card_owner_id = "677e01aeee9675ee44b3dc43"
 
         const card_for_saved = {
           "cardId": card_id,
