@@ -8,44 +8,44 @@ export default function Home() {
 
 
   const openAndSaveCard = () => {
-
     try {
-
       let fallbackLink = '';
-
-      // isiOS isAndroid implement by yourself
+  
       if (isiOS() || isAndroid()) {
-        const card_id = "677e036bee9675ee44b3dc65"
-        const card_owner_id = "677e01aeee9675ee44b3dc43"
-
+        const card_id = "677e036bee9675ee44b3dc65";
+        const card_owner_id = "677e01aeee9675ee44b3dc43";
+  
         const card_for_saved = {
           "cardId": card_id,
           "ownerId": card_owner_id
-        }
-        console.log("=-=-card_for_saved", card_for_saved)
+        };
+  
+        console.log("=-=-card_for_saved", card_for_saved);
         const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
         window.location.href = `saveseecard://open?id=${encodedData}`;
+  
+        // App Store / Play Store links
         const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
         const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
         fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
-        const timeout = setTimeout(function () {
-          if (document.hasFocus()) {
-            window.location.href = fallbackLink;
+  
+        // Delay the fallback
+        const timeout = setTimeout(() => {
+          if (document.visibilityState === "visible") {
+            window.open(fallbackLink, "_blank"); // Open App Store in a new tab
           }
         }, 2000);
-
-        window.addEventListener('blur', () => {
-          clearTimeout(timeout);;
-        });
+  
+        // If user switches to another app (app is installed), cancel the timeout
+        window.addEventListener('blur', () => clearTimeout(timeout));
       } else {
         alert("Your device doesn't support deep linking for this app.");
       }
     } catch (e) {
-      // alert(JSON.stringify(e))
-      console.log("catch error print -------------------", JSON.stringify(e))
+      console.log("catch error print -------------------", JSON.stringify(e));
     }
-
-  }
+  };
+  
 
 
 
