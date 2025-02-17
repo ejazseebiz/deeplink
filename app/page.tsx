@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from 'next/link';
 
 export default function Home() {
@@ -9,43 +9,6 @@ export default function Home() {
   // Helper function for device detection
   const isiOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent);
   const isAndroid = () => /Android/i.test(navigator.userAgent);
-
-
-  function redirectToApp() {
-    let fallbackLink = 'https://yourapp.com/download';
-
-    // isiOS isAndroid implement by yourself
-    if (isiOS() || isAndroid()) {
-      window.location.href = 'mychat://';
-
-      const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
-      const iosAppStoreLink = 'https://apps.apple.com/np/app/seebiz/id1624880662';
-      // const iosAppStoreLink = 'itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8';
-
-      fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
-      // setTimeout still executes after the app is opened, so the current page will navigate to the fallback link
-      // to prevent this, I use the document.hasFocus function to check
-      const timeout = setTimeout(function () {
-        // if the app is opened, the document won't be focused
-        // so if app is not installed, the document will be focused
-        if (document.hasFocus()) {
-          window.location.href = fallbackLink;
-          setIsInstalled(false);
-        }
-      }, 1000);
-
-      // If the app is installed, handle the "blur" event
-      window.addEventListener('blur', () => {
-        clearTimeout(timeout);
-        setIsInstalled(true);
-        // alert("Blur")
-      });
-    }
-  }
-
-  // useEffect(() => {
-  //   redirectToApp();
-  // }, []);
 
 
   const openAndSaveCard = (card_id: any, card_owner_id: any) => {
