@@ -13,7 +13,7 @@ export default function Home() {
       alert(isiOS());
 
       alert(navigator.userAgent);
-alert(navigator.platform);
+      alert(navigator.platform);
 
 
       if (isiOS() || isAndroid()) {
