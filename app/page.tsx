@@ -43,9 +43,9 @@ export default function Home() {
     }
   }
 
-  useEffect(() => {
-    redirectToApp();
-  }, []);
+  // useEffect(() => {
+  //   redirectToApp();
+  // }, []);
 
 
   const openAndSaveCard = (card_id: any, card_owner_id: any) => {
