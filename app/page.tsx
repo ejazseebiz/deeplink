@@ -59,11 +59,12 @@ export default function Home() {
         <hr />
 
 
-        <div>
+        
           <div className="cIcon ml-10 purpleBg" onClick={() => { openAndSaveCard() }}>
-          </div>
           <p className="container-text">Save Card</p>
-        </div>
+          </div>
+          
+        
 
 
         <h1>Open MyChat App</h1>
