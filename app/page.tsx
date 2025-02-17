@@ -8,8 +8,12 @@ export default function Home() {
 
   const isiOS = () => {
     const userAgent = navigator.userAgent || navigator.vendor;
-    return /iPhone|iPad|iPod/.test(userAgent);
+    return (
+      /iPhone|iPad|iPod/.test(userAgent) || 
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+    );
   };
+  
   
   const openAndSaveCard = () => {
     try {
