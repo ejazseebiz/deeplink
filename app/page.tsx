@@ -7,7 +7,7 @@ export default function Home() {
   const isAndroid = () => /Android/i.test(navigator.userAgent);
 
 
-  const openAndSaveCard = (card_id: any, card_owner_id: any) => {
+  const openAndSaveCard = () => {
 
     try {
 
@@ -60,7 +60,7 @@ export default function Home() {
 
 
         <div>
-          <div className="cIcon ml-10 purpleBg" onClick={() => { openAndSaveCard('cardInfo?._id', 'cardInfo?.owner') }}>
+          <div className="cIcon ml-10 purpleBg" onClick={() => { openAndSaveCard() }}>
           </div>
           <p className="container-text">Save Card</p>
         </div>
