@@ -17,7 +17,7 @@ export default function Home() {
   
   const openAndSaveCard = () => {
     try {
-      let fallbackLink = '';
+      // let fallbackLink = '';
 
       if (isiOS() || isAndroid()) {
 
