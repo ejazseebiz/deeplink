@@ -33,24 +33,21 @@ export default function Home() {
           "ownerId": card_owner_id
         };
   
-        console.log("=-=-card_for_saved", card_for_saved);
+        console.log("=-=-card_for_saved",card_for_saved)
         const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
-        window.location.href = `saveseecard://open?id=${encodedData}`;
+          window.location.href = `saveseecard://open?id=${encodedData}`;
+          const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
+          const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
+          fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
+          const timeout = setTimeout(function () {
+              if (document.hasFocus()) {
+                window.location.href = fallbackLink;
+              }
+          }, 2000);
   
-        // App Store / Play Store links
-        const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
-        const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
-        fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
-  
-        // Delay the fallback
-        const timeout = setTimeout(() => {
-          if (document.visibilityState === "visible") {
-            window.open(fallbackLink, "_blank"); // Open App Store in a new tab
-          }
-        }, 2000);
-  
-        // If user switches to another app (app is installed), cancel the timeout
-        window.addEventListener('blur', () => clearTimeout(timeout));
+          window.addEventListener('blur', () => {
+              clearTimeout(timeout);;
+          });
       } else {
         alert("Your device doesn't support deep linking for this app.");
       }
