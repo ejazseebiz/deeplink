@@ -28,30 +28,45 @@ export default function Home() {
           "cardId": card_id,
           "ownerId": card_owner_id
         };
-  
+
+        
         console.log("=-=-card_for_saved",card_for_saved)
         const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
-        const appLink = `saveseecard://open?id=${encodedData}`;
-
-        const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
-        const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
-
-          // window.location.href = `saveseecard://open?id=${encodedData}`;
+          window.location.href = `saveseecard://open?id=${encodedData}`;
+          const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
+          const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
           fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
-          const startTime = Date.now();
+          const timeout = setTimeout(function () {
+              if (document.hasFocus()) {
+                window.location.href = fallbackLink;
+              }
+          }, 2000);
+  
+          window.addEventListener('blur', () => {
+              clearTimeout(timeout);;
+          });
+          
+        // console.log("=-=-card_for_saved",card_for_saved)
+        // const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
+        // const appLink = `saveseecard://open?id=${encodedData}`;
+
+        // const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
+        // const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
+
+        //   fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
+        //   const startTime = Date.now();
       
-          // ✅ Instead of window.location.href, use an iframe (Safari-friendly)
-          const iframe = document.createElement("iframe");
-          iframe.style.display = "none";
-          iframe.src = appLink;
-          document.body.appendChild(iframe);
+        //   const iframe = document.createElement("iframe");
+        //   iframe.style.display = "none";
+        //   iframe.src = appLink;
+        //   document.body.appendChild(iframe);
     
-          setTimeout(() => {
-            const elapsedTime = Date.now() - startTime;
-            if (elapsedTime < 2000) { // If app didn't open within 2 seconds, redirect to App Store
-              window.location.href = fallbackLink;
-            }
-          }, 1500);
+        //   setTimeout(() => {
+        //     const elapsedTime = Date.now() - startTime;
+        //     if (elapsedTime < 2000) { 
+        //       window.location.href = fallbackLink;
+        //     }
+        //   }, 1500);
 
           
       } else {
