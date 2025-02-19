@@ -18,10 +18,6 @@ export default function Home() {
   const openAndSaveCard = () => {
     try {
       let fallbackLink = '';
-      alert(isiOS());
-
-      alert(navigator.userAgent);
-      alert(navigator.platform);
 
       if (isiOS() || isAndroid()) {
 
@@ -35,25 +31,34 @@ export default function Home() {
   
         console.log("=-=-card_for_saved",card_for_saved)
         const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
-          window.location.href = `saveseecard://open?id=${encodedData}`;
-          const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
-          const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
+        const appLink = `saveseecard://open?id=${encodedData}`;
+
+        const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
+        const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
+
+          // window.location.href = `saveseecard://open?id=${encodedData}`;
           fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
-          const timeout = setTimeout(function () {
-              if (document.hasFocus()) {
-                window.location.href = fallbackLink;
-              }
-          }, 2000);
-  
-          window.addEventListener('blur', () => {
-              clearTimeout(timeout);;
-          });
+          const startTime = Date.now();
+      
+          // ✅ Instead of window.location.href, use an iframe (Safari-friendly)
+          const iframe = document.createElement("iframe");
+          iframe.style.display = "none";
+          iframe.src = appLink;
+          document.body.appendChild(iframe);
+    
+          setTimeout(() => {
+            const elapsedTime = Date.now() - startTime;
+            if (elapsedTime < 2000) { // If app didn't open within 2 seconds, redirect to App Store
+              window.location.href = fallbackLink;
+            }
+          }, 1500);
+
+          
       } else {
         alert("Your device doesn't support deep linking for this app.");
       }
     } catch (e) {
-      alert("sssss");
-      console.log("catch error print -------------------", JSON.stringify(e));
+      console.log("Error:", e);
     }
   };
   
@@ -71,7 +76,10 @@ export default function Home() {
 
 
         
-          <div className="cIcon ml-10 purpleBg" onClick={() => { openAndSaveCard() }}>
+          <div className="cIcon ml-10 purpleBg" 
+          // onClick={() => { openAndSaveCard() }}
+          onClick={openAndSaveCard}
+          >
           <p className="container-text">Save Card</p>
           </div>
           
