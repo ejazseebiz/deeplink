@@ -30,44 +30,53 @@ export default function Home() {
         };
 
         
-        console.log("=-=-card_for_saved",card_for_saved)
-        const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
-          window.location.href = `saveseecard://open?id=${encodedData}`;
-          const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
-          const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
-          fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
-          const timeout = setTimeout(function () {
-              if (document.hasFocus()) {
-                window.location.href = fallbackLink;
-              }
-          }, 2000);
-  
-          window.addEventListener('blur', () => {
-              clearTimeout(timeout);;
-          });
-          
+
         // console.log("=-=-card_for_saved",card_for_saved)
         // const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
-        // const appLink = `saveseecard://open?id=${encodedData}`;
-
-        // const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
-        // const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
-
+        //   window.location.href = `saveseecard://open?id=${encodedData}`;
+        //   const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
+        //   const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
         //   fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
-        //   const startTime = Date.now();
-      
-        //   const iframe = document.createElement("iframe");
-        //   iframe.style.display = "none";
-        //   iframe.src = appLink;
-        //   document.body.appendChild(iframe);
-    
-        //   setTimeout(() => {
-        //     const elapsedTime = Date.now() - startTime;
-        //     if (elapsedTime < 2000) { 
-        //       window.location.href = fallbackLink;
-        //     }
-        //   }, 1500);
+        //   const timeout = setTimeout(function () {
+        //       if (document.hasFocus()) {
+        //         window.location.href = fallbackLink;
+        //       }
+        //   }, 2000);
+  
+        //   window.addEventListener('blur', () => {
+        //       clearTimeout(timeout);;
+        //   });
 
+
+          
+        console.log("=-=-card_for_saved", card_for_saved);
+
+        // ✅ Encode data
+        const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
+    
+        // ✅ Custom URL scheme for app deep linking
+        const deepLink = `saveseecard://open?id=${encodedData}`;
+    
+        // ✅ App Store fallback links
+        const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
+        const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
+        const fallbackLink = isiOS() ? iosAppStoreLink : androidAppStoreLink;
+    
+        // ✅ Create an iframe to open the deep link (prevents Safari error)
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = deepLink;
+        document.body.appendChild(iframe);
+    
+        // ✅ Set timeout to redirect to the App Store if the app is not installed
+        setTimeout(() => {
+          window.location.href = fallbackLink;
+        }, 2000);
+    
+        // ✅ Clean up iframe to prevent memory leaks
+        setTimeout(() => {
+          document.body.removeChild(iframe);
+        }, 3000);
           
       } else {
         alert("Your device doesn't support deep linking for this app.");
