@@ -23,7 +23,7 @@ export default function Home() {
           "ownerId": card_owner_id
         };
         
-        const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
+        // const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
         const deepLink = `saveseecard://`;
 
           const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
