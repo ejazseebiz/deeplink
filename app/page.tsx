@@ -64,7 +64,7 @@ export default function Home() {
           // onClick={() => { openAndSaveCard() }}
           onClick={openAndSaveCard}
           >
-          Save Card2
+          Save Card3
           </div>
       </main>
     </div>
