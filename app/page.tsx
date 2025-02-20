@@ -26,11 +26,6 @@ export default function Home() {
         const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
         const deepLink = `saveseecard://open?id=${encodedData}`;
 
-          // alert('1');
-          // window.location.href = `saveseecard://open?id=${encodedData}`;
-          // alert('2');
-   
-
           const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
           const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
           const fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
