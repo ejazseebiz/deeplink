@@ -17,23 +17,25 @@ export default function Home() {
     const encodedData = encodeURIComponent(JSON.stringify({ cardId: card_id, ownerId: card_owner_id }));
     const universalLink = `https://deeplink-kappa.vercel.app/open?id=${encodedData}`; // Your Universal Link
 
-    const appStoreLink_Android = 'YOUR_ANDROID_APP_STORE_LINK'; // Replace with your Android app store link
-    const appStoreLink_iOS = 'YOUR_IOS_APP_STORE_LINK'; // Replace with your iOS app store link
+    // const appStoreLink_Android = 'YOUR_ANDROID_APP_STORE_LINK'; // Replace with your Android app store link
+    // const appStoreLink_iOS = 'YOUR_IOS_APP_STORE_LINK'; // Replace with your iOS app store link
 
 
+    const appStoreLink_Android = 'https://play.google.com/store/apps/details?id=com.seecard';
+    const appStoreLink_iOS = 'https://apps.apple.com/np/app/seecard/id6502513661';
     if (isIOS()) {
         const startTime = Date.now();
-        window.location = universalLink; // Try to open the app
+        window.location.href = universalLink; // Try to open the app
 
         setTimeout(() => {
           const endTime = Date.now();
           if (endTime - startTime < 2500) { // Check if the app opened (adjust timeout if needed)
-            window.location = appStoreLink_iOS; // Redirect to App Store if app didn't open
+            window.location.href = appStoreLink_iOS; // Redirect to App Store if app didn't open
           }
         }, 2000); // Small delay to allow app to open
 
       } else if (isAndroid()) {
-        window.location = universalLink; // Try to open the app
+        window.location.href = universalLink; // Try to open the app
 
         setTimeout(() => {
           // Use an iframe to check if the app opened (more reliable on Android)
