@@ -1,18 +1,26 @@
-{ 
-  "applinks": { 
-    "apps": [], 
-    "details": [ 
-      { 
-        "appID": "CS5T98P223.com.seecard.marketplace", 
-        "paths": [
-            "*",
-            "/recover/*", 
-            "/settings/*"
-        ] 
-      } 
-    ] 
-  } ,
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["CS5T98P223.com.seecard.marketplace"],
+        "components": [
+          {
+            "/": "/recover/*",
+            "comment": "Matches any URL with a path that starts with /recover/."
+          },
+          {
+            "/": "/settings/*",
+            "comment": "Matches any URL with a path that starts with /settings/."
+          },
+          {
+            "/": "/*",
+            "comment": "Matches all other URLs."
+          }
+        ]
+      }
+    ]
+  },
   "webcredentials": {
-     "apps": [ "CS5T98P223.com.seecard.marketplace" ]
+    "apps": ["CS5T98P223.com.seecard.marketplace"]
   }
-} 
+}

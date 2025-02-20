@@ -1,11 +1,7 @@
 "use client"
 
 export default function Home() {
-
-  // Helper function for device detection
-  // const isiOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent);
   const isAndroid = () => /Android/i.test(navigator.userAgent);
-
   const isiOS = () => {
     const userAgent = navigator.userAgent || navigator.vendor;
     return (
@@ -17,8 +13,6 @@ export default function Home() {
   
   const openAndSaveCard = () => {
     try {
-      // let fallbackLink = '';
-
       if (isiOS() || isAndroid()) {
 
         const card_id = "677e036bee9675ee44b3dc65";
@@ -28,55 +22,35 @@ export default function Home() {
           "cardId": card_id,
           "ownerId": card_owner_id
         };
-
         
-
-        // console.log("=-=-card_for_saved",card_for_saved)
-        // const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
-        //   window.location.href = `saveseecard://open?id=${encodedData}`;
-        //   const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
-        //   const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
-        //   fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
-        //   const timeout = setTimeout(function () {
-        //       if (document.hasFocus()) {
-        //         window.location.href = fallbackLink;
-        //       }
-        //   }, 2000);
-  
-        //   window.addEventListener('blur', () => {
-        //       clearTimeout(timeout);;
-        //   });
-
-
-          
-        console.log("=-=-card_for_saved", card_for_saved);
-
-        // ✅ Encode data
         const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
-    
-        // ✅ Custom URL scheme for app deep linking
         const deepLink = `saveseecard://open?id=${encodedData}`;
-    
-        // ✅ App Store fallback links
-        const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
-        const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
-        const fallbackLink = isiOS() ? iosAppStoreLink : androidAppStoreLink;
-    
-        // ✅ Create an iframe to open the deep link (prevents Safari error)
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = deepLink;
-        document.body.appendChild(iframe);
-    
-        // ✅ Set timeout to redirect to the App Store if the app is not installed
-        setTimeout(() => {
-          window.location.href = fallbackLink;
-        }, 2000);
-    
-        // ✅ Clean up iframe to prevent memory leaks
-        setTimeout(() => {
-          document.body.removeChild(iframe);
-        }, 3000);
+
+          // alert('1');
+          // window.location.href = `saveseecard://open?id=${encodedData}`;
+          // alert('2');
+   
+
+          const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
+          const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
+          const fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
+          let hasFocus = true;
+
+          const handleBlur = () => {
+            hasFocus = false;
+          };
+  
+          window.addEventListener('blur', handleBlur);
+  
+          window.location.href = deepLink;
+  
+          setTimeout(() => {
+            window.removeEventListener('blur', handleBlur);
+            if (hasFocus) {
+              alert("The app could not be opened. Please install it from the store.");
+              window.location.href = fallbackLink;
+            }
+          }, 2000);
           
       } else {
         alert("Your device doesn't support deep linking for this app.");
@@ -92,28 +66,13 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-
-
-        <h1>Open Universal Link</h1>
-        <a href="https://deeplink-kappa.vercel.app/" target="_blank">Open Link</a>
-        <hr />
-
-
         
           <div className="cIcon ml-10 purpleBg" 
           // onClick={() => { openAndSaveCard() }}
           onClick={openAndSaveCard}
           >
-          <p className="container-text">Save Card</p>
+          Save Card2
           </div>
-          
-        
-
-
-        <h1>Open MyChat App</h1>
-        <a href="mychat://open">Open App</a>
-        
-
       </main>
     </div>
   );
