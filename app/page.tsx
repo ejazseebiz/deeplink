@@ -46,7 +46,7 @@ export default function Home() {
 
           setTimeout(() => {
             document.body.removeChild(iframe); // Remove the iframe
-            window.location = appStoreLink_Android; // Redirect to Play Store if app didn't open
+            window.location.href = appStoreLink_Android; // Redirect to Play Store if app didn't open
           }, 250); // Small delay
         },2000)
       } else {
