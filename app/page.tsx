@@ -2,7 +2,7 @@
 
 export default function Home() {
   const isAndroid = () => /Android/i.test(navigator.userAgent);
-  const isiOS = () => {
+  const isIOS = () => {
     const userAgent = navigator.userAgent || navigator.vendor;
     return (
       /iPhone|iPad|iPod/.test(userAgent) || 
@@ -12,47 +12,45 @@ export default function Home() {
   
   
   const openAndSaveCard = () => {
-    try {
-      if (isiOS() || isAndroid()) {
+    const card_id = "677e036bee9675ee44b3dc65"; // Example data
+    const card_owner_id = "677e01aeee9675ee44b3dc43"; // Example data
+    const encodedData = encodeURIComponent(JSON.stringify({ cardId: card_id, ownerId: card_owner_id }));
+    const universalLink = `https://deeplink-kappa.vercel.app/open?id=${encodedData}`; // Your Universal Link
 
-        const card_id = "677e036bee9675ee44b3dc65";
-        const card_owner_id = "677e01aeee9675ee44b3dc43";
-  
-        const card_for_saved = {
-          "cardId": card_id,
-          "ownerId": card_owner_id
-        };
-        
-        const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
-        const deepLink = `saveseecard://open?id=${encodedData}`;
+    const appStoreLink_Android = 'YOUR_ANDROID_APP_STORE_LINK'; // Replace with your Android app store link
+    const appStoreLink_iOS = 'YOUR_IOS_APP_STORE_LINK'; // Replace with your iOS app store link
 
-          const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
-          const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
-          const fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
-          let hasFocus = true;
 
-          const handleBlur = () => {
-            hasFocus = false;
-          };
-  
-          window.addEventListener('blur', handleBlur);
-  
-          window.location.href = deepLink;
-  
+    if (isIOS()) {
+        const startTime = Date.now();
+        window.location = universalLink; // Try to open the app
+
+        setTimeout(() => {
+          const endTime = Date.now();
+          if (endTime - startTime < 2500) { // Check if the app opened (adjust timeout if needed)
+            window.location = appStoreLink_iOS; // Redirect to App Store if app didn't open
+          }
+        }, 2000); // Small delay to allow app to open
+
+      } else if (isAndroid()) {
+        window.location = universalLink; // Try to open the app
+
+        setTimeout(() => {
+          // Use an iframe to check if the app opened (more reliable on Android)
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = universalLink;  // Try the link again in the iframe
+          document.body.appendChild(iframe);
+
           setTimeout(() => {
-            window.removeEventListener('blur', handleBlur);
-            if (hasFocus) {
-              alert("The app could not be opened. Please install it from the store.");
-              window.location.href = fallbackLink;
-            }
-          }, 2000);
-          
+            document.body.removeChild(iframe); // Remove the iframe
+            window.location = appStoreLink_Android; // Redirect to Play Store if app didn't open
+          }, 250); // Small delay
+        },2000)
       } else {
-        alert("Your device doesn't support deep linking for this app.");
+        // Fallback for other platforms (optional)
+        alert("This feature is only available on iOS and Android.");
       }
-    } catch (e) {
-      console.log("Error:", e);
-    }
   };
   
 
