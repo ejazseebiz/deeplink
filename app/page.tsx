@@ -22,16 +22,21 @@ export default function Home() {
   useEffect(() => {
     if (typeof window === "undefined") return; // Ensure code runs only on client
 
-    // const now = new Date().getTime();
     let hasNavigatedAway = false;
+    let timeout: NodeJS.Timeout;
 
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        hasNavigatedAway = true; // User left the page, meaning the app opened
+    const handleBlur = () => {
+      hasNavigatedAway = true; // User left the page
+    };
+
+    const handleFocus = () => {
+      if (hasNavigatedAway) {
+        setIsAppInstalled(true); // User returned → app likely opened
       }
     };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("blur", handleBlur);
+    window.addEventListener("focus", handleFocus);
 
     if (isiOS()) {
       // On iOS, use an iframe to avoid Safari errors
@@ -40,20 +45,24 @@ export default function Home() {
       hiddenIframe.src = APP_SCHEME;
       document.body.appendChild(hiddenIframe);
 
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         document.body.removeChild(hiddenIframe);
         setIsAppInstalled(hasNavigatedAway);
-        document.removeEventListener("visibilitychange", handleVisibilityChange);
       }, 2000);
     } else {
       // On Android, try opening the app
       window.location.href = APP_SCHEME;
 
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         setIsAppInstalled(hasNavigatedAway);
-        document.removeEventListener("visibilitychange", handleVisibilityChange);
       }, 2000);
     }
+
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("focus", handleFocus);
+    };
   }, []);
 
   if (isAppInstalled === null) {
