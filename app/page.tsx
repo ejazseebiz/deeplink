@@ -20,17 +20,32 @@ export default function Home() {
   const [isAppInstalled, setIsAppInstalled] = useState<boolean | null>(null);
   // const [checkApps, setCheckdApps] = useState(null);
 
+  const [isInstalled, setIsInstalled] = useState<boolean | null>(null);
 
-  const getApps = async () => {
-    const installedApps = await (navigator as any).getInstalledRelatedApps();
-    return installedApps;
-  }
 
   useEffect(() => {
     if (typeof window === "undefined") return; // Ensure code runs only on client
 
     
-    alert(getApps());
+    const checkInstalledApps = async () => {
+      if ("getInstalledRelatedApps" in navigator) {
+        const installedApps = await (navigator as any).getInstalledRelatedApps();
+        console.log("Installed Apps:", installedApps);
+
+        if (installedApps.length > 0) {
+          setIsInstalled(true);
+        } else {
+          setIsInstalled(false);
+        }
+      } else {
+        console.log("API not supported in this browser.");
+        setIsInstalled(null);
+      }
+    };
+
+    checkInstalledApps();
+
+
     let hasNavigatedAway = false;
     let timeout: NodeJS.Timeout;
 
@@ -89,6 +104,15 @@ export default function Home() {
           Install App
         </a>
       )}
+
+{isInstalled === true ? (
+        <p>✅ App is installed!</p>
+      ) : isInstalled === false ? (
+        <p>❌ App is NOT installed.</p>
+      ) : (
+        <p>⚠️ API not supported.</p>
+      )}
+
 
       <p>{isAppInstalled ? "App is installed" : "App not installed"}</p>
       <p>{isiOS() ? "APP_STORE_URL" : "PLAY_STORE_URL"}</p>
