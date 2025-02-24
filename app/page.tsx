@@ -1,6 +1,15 @@
 "use client"
 
+import { useEffect, useState } from "react";
+
+const APP_SCHEME = "seecard://"; // Your app's custom scheme
+const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.seecard.marketplace";
+const APP_STORE_URL = "https://apps.apple.com/app/idYOUR_APP_ID";
+
+
 export default function Home() {
+  const [isAppInstalled, setIsAppInstalled] = useState(false);
+
   const isAndroid = () => /Android/i.test(navigator.userAgent);
   const isiOS = () => {
     const userAgent = navigator.userAgent || navigator.vendor;
@@ -11,64 +20,50 @@ export default function Home() {
   };
   
   
-  const openAndSaveCard = () => {
-    try {
-      if (isiOS() || isAndroid()) {
+  useEffect(() => {
+    const checkAppInstalled = () => {
+      const now = new Date().getTime();
+      window.location = APP_SCHEME;
+      
+      setTimeout(() => {
+        const elapsedTime = new Date().getTime() - now;
+        if (elapsedTime < 1500) {
+          setIsAppInstalled(false);
+        } else {
+          setIsAppInstalled(true);
+        }
+      }, 1000);
+    };
 
-        const card_id = "677e036bee9675ee44b3dc65";
-        const card_owner_id = "677e01aeee9675ee44b3dc43";
-  
-        const card_for_saved = {
-          "cardId": card_id,
-          "ownerId": card_owner_id
-        };
-        
-        const encodedData = encodeURIComponent(JSON.stringify(card_for_saved));
-        const deepLink = `saveseecard://open?id=${encodedData}`;
-
-          const androidAppStoreLink = 'https://play.google.com/store/apps/details?id=com.seecard';
-          const iosAppStoreLink = 'https://apps.apple.com/np/app/seecard/id6502513661';
-          const fallbackLink = isAndroid() ? androidAppStoreLink : iosAppStoreLink;
-          let hasFocus = true;
-
-          const handleBlur = () => {
-            hasFocus = false;
-          };
-  
-          window.addEventListener('blur', handleBlur);
-  
-          window.location.href = deepLink;
-  
-          setTimeout(() => {
-            window.removeEventListener('blur', handleBlur);
-            if (hasFocus) {
-              alert("The app could not be opened. Please install it from the store.");
-              window.location.href = fallbackLink;
-            }
-          }, 2000);
-          
-      } else {
-        alert("Your device doesn't support deep linking for this app.");
-      }
-    } catch (e) {
-      console.log("Error:", e);
-    }
-  };
-  
+    checkAppInstalled();
+  }, []);
 
 
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        
-          <div className="cIcon ml-10 purpleBg" 
-          // onClick={() => { openAndSaveCard() }}
-          onClick={openAndSaveCard}
-          >
-          Save Card2
-          </div>
-      </main>
+<div style={{ textAlign: "center", marginTop: "50px" }}>
+      {isAppInstalled ? (
+        <a href={APP_SCHEME} style={buttonStyle}>
+          Open App
+        </a>
+      ) : (
+        <a
+          href={navigator.userAgent.includes("iPhone") ? APP_STORE_URL : PLAY_STORE_URL}
+          style={buttonStyle}
+        >
+          Install App
+        </a>
+      )}
     </div>
   );
 }
+
+const buttonStyle = {
+  display: "inline-block",
+  padding: "10px 20px",
+  backgroundColor: "#007bff",
+  color: "#fff",
+  textDecoration: "none",
+  borderRadius: "5px",
+  fontSize: "18px",
+};
