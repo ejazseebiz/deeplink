@@ -18,7 +18,6 @@ const isiOS = () => {
 
 export default function Home() {
   const [isAppInstalled, setIsAppInstalled] = useState<boolean | null>(null);
-  const [instaledApps, setInstalledApps] = useState(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return; // Ensure code runs only on client
