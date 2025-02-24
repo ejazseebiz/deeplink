@@ -23,7 +23,7 @@ export default function Home() {
   useEffect(() => {
     const checkAppInstalled = () => {
       const now = new Date().getTime();
-      window.location = APP_SCHEME;
+      window.location.href = APP_SCHEME;
       
       setTimeout(() => {
         const elapsedTime = new Date().getTime() - now;
