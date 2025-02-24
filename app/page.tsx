@@ -22,7 +22,6 @@ export default function Home() {
   useEffect(() => {
     if (typeof window === "undefined") return; // Ensure code runs only on client
 
-    let hidden = false;
     const now = new Date().getTime();
 
     const handleVisibilityChange = () => {
@@ -44,7 +43,7 @@ export default function Home() {
       document.body.appendChild(hiddenIframe);
 
       setTimeout(() => {
-        if (!hidden) setIsAppInstalled(false);
+        setIsAppInstalled(false);
         document.body.removeChild(hiddenIframe);
       }, 2000);
     } else {
@@ -52,7 +51,7 @@ export default function Home() {
       window.location.href = APP_SCHEME;
 
       setTimeout(() => {
-        if (!hidden) setIsAppInstalled(false);
+        setIsAppInstalled(false);
       }, 2000);
     }
   }, []);
