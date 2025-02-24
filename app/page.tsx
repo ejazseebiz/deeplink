@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 const APP_SCHEME = "seecard://"; // Your app's custom scheme
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.seecard.marketplace";
 const APP_STORE_URL = "https://apps.apple.com/app/idYOUR_APP_ID";
-const isAndroid = () => {
-  if (typeof navigator === "undefined") return false;
-  return /Android/i.test(navigator.userAgent);
-};
+
+// const isAndroid = () => {
+//   if (typeof navigator === "undefined") return false;
+//   return /Android/i.test(navigator.userAgent);
+// };
 
 // Function to check if the user is on iOS
 const isiOS = () => {
