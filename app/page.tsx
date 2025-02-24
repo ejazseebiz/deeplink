@@ -18,12 +18,12 @@ const isiOS = () => {
 
 export default function Home() {
   const [isAppInstalled, setIsAppInstalled] = useState<boolean | null>(null);
-  const [instaledApps, setInstalledApps] = useState(null);
+  // const [checkApps, setCheckdApps] = useState(null);
 
 
   const getApps = async () => {
     const installedApps = await (navigator as any).getInstalledRelatedApps();
-    return instaledApps;
+    return installedApps;
   }
 
   useEffect(() => {
