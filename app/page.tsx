@@ -18,10 +18,19 @@ const isiOS = () => {
 
 export default function Home() {
   const [isAppInstalled, setIsAppInstalled] = useState<boolean | null>(null);
+  const [instaledApps, setInstalledApps] = useState(null);
+
+
+  const getApps = async () => {
+    const installedApps = await (navigator as any).getInstalledRelatedApps();
+    return instaledApps;
+  }
 
   useEffect(() => {
     if (typeof window === "undefined") return; // Ensure code runs only on client
 
+    
+    alert(getApps());
     let hasNavigatedAway = false;
     let timeout: NodeJS.Timeout;
 
