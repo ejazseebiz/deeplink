@@ -31,13 +31,13 @@ export default function Home() {
     let timeout: NodeJS.Timeout;
 
     const handleBlur = () => {
-      alert("handleBlur");
-      
+      // alert("handleBlur");
+
       hasNavigatedAway = true; // User left the page
     };
 
     const handleFocus = () => {
-      alert("handleFocus");
+      // alert("handleFocus");
 
       if (hasNavigatedAway) {
         setIsAppInstalled(true); // User returned → app likely opened
