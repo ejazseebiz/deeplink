@@ -6,14 +6,17 @@
         "components": [
           {
             "/": "/recover/*",
+            "include": true,
             "comment": "Matches any URL with a path that starts with /recover/."
           },
           {
             "/": "/settings/*",
+            "include": true,
             "comment": "Matches any URL with a path that starts with /settings/."
           },
           {
             "/": "/*",
+            "include": true,
             "comment": "Matches all other URLs."
           }
         ]
