@@ -24,18 +24,6 @@ const isiOS = () => {
 
 export default function Home() {
   const [isAppInstalled, setIsAppInstalled] = useState(false);
-
-  // const isAndroid = () => /Android/i.test(navigator.userAgent);
-  // const isiOS = () => {
-  //   const userAgent = navigator.userAgent || navigator.vendor;
-  //   return (
-  //     /iPhone|iPad|iPod/.test(userAgent) || 
-  //     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
-  //   );
-  // };
-  
-  // Function to check if the user is on Android
-
   
   useEffect(() => {
 
@@ -73,6 +61,11 @@ export default function Home() {
             Install App
           </a>
         )}
+
+        <p>{isAppInstalled == true ? "App is installed" : "App not installed"}</p>
+        <p>{isiOS() ? 'APP_STORE_URL' : 'PLAY_STORE_URL'}</p>
+        <p>{isAppInstalled}</p>
+
     </div>
   );
 }
