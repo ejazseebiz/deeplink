@@ -16,51 +16,29 @@ const isiOS = () => {
   );
 };
 
-declare global {
-  interface Navigator {
-    getInstalledRelatedApps?: () => Promise<{ id: string; platform: string; url: string }[]>;
-  }
-}
-
 export default function Home() {
   const [isAppInstalled, setIsAppInstalled] = useState<boolean | null>(null);
   // const [checkApps, setCheckdApps] = useState(null);
 
-  const [isInstalled, setIsInstalled] = useState<boolean | null>(null);
 
 
   useEffect(() => {
     if (typeof window === "undefined") return; // Ensure code runs only on client
 
     
-    const checkInstalledApps = async () => {
-      if (navigator.getInstalledRelatedApps) {
-        try {
-          const installedApps = await navigator.getInstalledRelatedApps();
-          console.log("Installed Apps:", installedApps);
-
-          setIsInstalled(installedApps.length > 0);
-        } catch (error) {
-          console.error("Error checking installed apps:", error);
-          setIsInstalled(null);
-        }
-      } else {
-        console.log("API not supported in this browser.");
-        setIsInstalled(null);
-      }
-    };
-
-    checkInstalledApps();
-
 
     let hasNavigatedAway = false;
     let timeout: NodeJS.Timeout;
 
     const handleBlur = () => {
+      alert("handleBlur");
+      
       hasNavigatedAway = true; // User left the page
     };
 
     const handleFocus = () => {
+      alert("handleFocus");
+
       if (hasNavigatedAway) {
         setIsAppInstalled(true); // User returned → app likely opened
       }
@@ -111,15 +89,6 @@ export default function Home() {
           Install App
         </a>
       )}
-
-{isInstalled === true ? (
-        <p>✅ App is installed!</p>
-      ) : isInstalled === false ? (
-        <p>❌ App is NOT installed.</p>
-      ) : (
-        <p>⚠️ API not supported.</p>
-      )}
-
 
       <p>{isAppInstalled ? "App is installed" : "App not installed"}</p>
       <p>{isiOS() ? "APP_STORE_URL" : "PLAY_STORE_URL"}</p>
