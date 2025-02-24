@@ -16,6 +16,12 @@ const isiOS = () => {
   );
 };
 
+declare global {
+  interface Navigator {
+    getInstalledRelatedApps?: () => Promise<{ id: string; platform: string; url: string }[]>;
+  }
+}
+
 export default function Home() {
   const [isAppInstalled, setIsAppInstalled] = useState<boolean | null>(null);
   // const [checkApps, setCheckdApps] = useState(null);
@@ -28,14 +34,15 @@ export default function Home() {
 
     
     const checkInstalledApps = async () => {
-      if ("getInstalledRelatedApps" in navigator) {
-        const installedApps = await (navigator as any).getInstalledRelatedApps();
-        console.log("Installed Apps:", installedApps);
+      if (navigator.getInstalledRelatedApps) {
+        try {
+          const installedApps = await navigator.getInstalledRelatedApps();
+          console.log("Installed Apps:", installedApps);
 
-        if (installedApps.length > 0) {
-          setIsInstalled(true);
-        } else {
-          setIsInstalled(false);
+          setIsInstalled(installedApps.length > 0);
+        } catch (error) {
+          console.error("Error checking installed apps:", error);
+          setIsInstalled(null);
         }
       } else {
         console.log("API not supported in this browser.");
