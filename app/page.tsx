@@ -22,33 +22,39 @@ export default function Home() {
   useEffect(() => {
     if (typeof window === "undefined") return; // Ensure code runs only on client
 
-    const checkAppInstalled = () => {
-      const now = new Date().getTime();
+    let hidden = false;
+    const now = new Date().getTime();
 
-      if (isiOS()) {
-        // On iOS, use an iframe to prevent Safari error
-        const hiddenIframe = document.createElement("iframe");
-        hiddenIframe.style.display = "none";
-        hiddenIframe.src = APP_SCHEME;
-        document.body.appendChild(hiddenIframe);
-
-        setTimeout(() => {
-          const elapsedTime = new Date().getTime() - now;
-          setIsAppInstalled(elapsedTime >= 1500);
-          document.body.removeChild(hiddenIframe);
-        }, 1000);
-      } else {
-        // On Android, use a hidden link click
-        window.location.href = APP_SCHEME;
-
-        setTimeout(() => {
-          const elapsedTime = new Date().getTime() - now;
-          setIsAppInstalled(elapsedTime >= 1500);
-        }, 1000);
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        // User returned to the browser
+        const elapsedTime = new Date().getTime() - now;
+        setIsAppInstalled(elapsedTime >= 1500);
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
       }
     };
 
-    checkAppInstalled();
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    if (isiOS()) {
+      // On iOS, use an iframe to prevent Safari error
+      const hiddenIframe = document.createElement("iframe");
+      hiddenIframe.style.display = "none";
+      hiddenIframe.src = APP_SCHEME;
+      document.body.appendChild(hiddenIframe);
+
+      setTimeout(() => {
+        if (!hidden) setIsAppInstalled(false);
+        document.body.removeChild(hiddenIframe);
+      }, 2000);
+    } else {
+      // On Android, try opening the app
+      window.location.href = APP_SCHEME;
+
+      setTimeout(() => {
+        if (!hidden) setIsAppInstalled(false);
+      }, 2000);
+    }
   }, []);
 
   if (isAppInstalled === null) {
