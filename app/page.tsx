@@ -5,6 +5,20 @@ import { useEffect, useState } from "react";
 const APP_SCHEME = "seecard://"; // Your app's custom scheme
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.seecard.marketplace";
 const APP_STORE_URL = "https://apps.apple.com/app/idYOUR_APP_ID";
+const isAndroid = () => {
+  if (typeof navigator === "undefined") return false;
+  return /Android/i.test(navigator.userAgent);
+};
+
+// Function to check if the user is on iOS
+const isiOS = () => {
+  if (typeof navigator === "undefined") return false;
+  const userAgent = navigator.userAgent || navigator.vendor;
+  return (
+    /iPhone|iPad|iPod/.test(userAgent) || 
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+  );
+};
 
 
 export default function Home() {
@@ -19,8 +33,13 @@ export default function Home() {
   //   );
   // };
   
+  // Function to check if the user is on Android
+
   
   useEffect(() => {
+
+    if (typeof window === "undefined") return; // Ensure code runs only on the client
+
     const checkAppInstalled = () => {
       const now = new Date().getTime();
       window.location.href = APP_SCHEME;
@@ -38,22 +57,21 @@ export default function Home() {
     checkAppInstalled();
   }, []);
 
-
+  if (isAppInstalled === null) {
+    return <p>Checking app installation...</p>;
+  }
 
   return (
-<div style={{ textAlign: "center", marginTop: "50px" }}>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
       {isAppInstalled ? (
-        <a href={APP_SCHEME} style={buttonStyle}>
-          Open App
-        </a>
-      ) : (
-        <a
-          href={navigator.userAgent.includes("iPhone") ? APP_STORE_URL : PLAY_STORE_URL}
-          style={buttonStyle}
-        >
-          Install App
-        </a>
-      )}
+          <a href={APP_SCHEME} style={buttonStyle}>
+            Open App
+          </a>
+        ) : (
+          <a href={isiOS() ? APP_STORE_URL : PLAY_STORE_URL} style={buttonStyle}>
+            Install App
+          </a>
+        )}
     </div>
   );
 }
