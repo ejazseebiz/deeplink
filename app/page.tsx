@@ -1,44 +1,50 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 
 const APP_SCHEME = "saveseecard://"; // Your app's custom scheme
-const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.seecard.marketplace";
-const APP_STORE_URL = "https://apps.apple.com/app/idYOUR_APP_ID";
-
-// const isAndroid = () => {
-//   if (typeof navigator === "undefined") return false;
-//   return /Android/i.test(navigator.userAgent);
-// };
+const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.seecard";
+const APP_STORE_URL = "https://apps.apple.com/np/app/seecard/id6502513661";
 
 // Function to check if the user is on iOS
 const isiOS = () => {
   if (typeof navigator === "undefined") return false;
   const userAgent = navigator.userAgent || navigator.vendor;
   return (
-    /iPhone|iPad|iPod/.test(userAgent) || 
+    /iPhone|iPad|iPod/.test(userAgent) ||
     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
   );
 };
 
-
 export default function Home() {
-  const [isAppInstalled, setIsAppInstalled] = useState(false);
-  
-  useEffect(() => {
+  const [isAppInstalled, setIsAppInstalled] = useState(null);
 
-    if (typeof window === "undefined") return; // Ensure code runs only on the client
+  useEffect(() => {
+    if (typeof window === "undefined") return; // Ensure code runs only on client
 
     const checkAppInstalled = () => {
       const now = new Date().getTime();
-      window.location.href = APP_SCHEME;
-      
+      let hiddenIframe = document.createElement("iframe");
+
+      if (isiOS()) {
+        // On iOS, use an iframe to prevent Safari error
+        hiddenIframe.style.display = "none";
+        hiddenIframe.src = APP_SCHEME;
+        document.body.appendChild(hiddenIframe);
+      } else {
+        // On Android, use a hidden link click
+        window.location.href = APP_SCHEME;
+      }
+
       setTimeout(() => {
         const elapsedTime = new Date().getTime() - now;
         if (elapsedTime < 1500) {
           setIsAppInstalled(false);
         } else {
           setIsAppInstalled(true);
+        }
+        if (hiddenIframe) {
+          document.body.removeChild(hiddenIframe);
         }
       }, 1000);
     };
@@ -53,19 +59,18 @@ export default function Home() {
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       {isAppInstalled ? (
-          <a href={APP_SCHEME} style={buttonStyle}>
-            Open App
-          </a>
-        ) : (
-          <a href={isiOS() ? APP_STORE_URL : PLAY_STORE_URL} style={buttonStyle}>
-            Install App
-          </a>
-        )}
+        <a href={APP_SCHEME} style={buttonStyle}>
+          Open App
+        </a>
+      ) : (
+        <a href={isiOS() ? APP_STORE_URL : PLAY_STORE_URL} style={buttonStyle}>
+          Install App
+        </a>
+      )}
 
-        <p>{isAppInstalled == true ? "App is installed" : "App not installed"}</p>
-        <p>{isiOS() ? 'APP_STORE_URL' : 'PLAY_STORE_URL'}</p>
-        <p>{isAppInstalled}</p>
-
+      <p>{isAppInstalled ? "App is installed" : "App not installed"}</p>
+      <p>{isiOS() ? "APP_STORE_URL" : "PLAY_STORE_URL"}</p>
+      <p>{isAppInstalled.toString()}</p>
     </div>
   );
 }
