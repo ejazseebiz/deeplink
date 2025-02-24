@@ -22,36 +22,36 @@ export default function Home() {
   useEffect(() => {
     if (typeof window === "undefined") return; // Ensure code runs only on client
 
-    const now = new Date().getTime();
+    // const now = new Date().getTime();
+    let hasNavigatedAway = false;
 
     const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        // User returned to the browser
-        const elapsedTime = new Date().getTime() - now;
-        setIsAppInstalled(elapsedTime >= 1500);
-        document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (document.hidden) {
+        hasNavigatedAway = true; // User left the page, meaning the app opened
       }
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     if (isiOS()) {
-      // On iOS, use an iframe to prevent Safari error
+      // On iOS, use an iframe to avoid Safari errors
       const hiddenIframe = document.createElement("iframe");
       hiddenIframe.style.display = "none";
       hiddenIframe.src = APP_SCHEME;
       document.body.appendChild(hiddenIframe);
 
       setTimeout(() => {
-        setIsAppInstalled(false);
         document.body.removeChild(hiddenIframe);
+        setIsAppInstalled(hasNavigatedAway);
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
       }, 2000);
     } else {
       // On Android, try opening the app
       window.location.href = APP_SCHEME;
 
       setTimeout(() => {
-        setIsAppInstalled(false);
+        setIsAppInstalled(hasNavigatedAway);
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
       }, 2000);
     }
   }, []);
