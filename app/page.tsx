@@ -17,36 +17,35 @@ const isiOS = () => {
 };
 
 export default function Home() {
-  const [isAppInstalled, setIsAppInstalled] = useState(null);
+  const [isAppInstalled, setIsAppInstalled] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return; // Ensure code runs only on client
 
     const checkAppInstalled = () => {
       const now = new Date().getTime();
-      let hiddenIframe = document.createElement("iframe");
 
       if (isiOS()) {
         // On iOS, use an iframe to prevent Safari error
+        const hiddenIframe = document.createElement("iframe");
         hiddenIframe.style.display = "none";
         hiddenIframe.src = APP_SCHEME;
         document.body.appendChild(hiddenIframe);
+
+        setTimeout(() => {
+          const elapsedTime = new Date().getTime() - now;
+          setIsAppInstalled(elapsedTime >= 1500);
+          document.body.removeChild(hiddenIframe);
+        }, 1000);
       } else {
         // On Android, use a hidden link click
         window.location.href = APP_SCHEME;
-      }
 
-      setTimeout(() => {
-        const elapsedTime = new Date().getTime() - now;
-        if (elapsedTime < 1500) {
-          setIsAppInstalled(false);
-        } else {
-          setIsAppInstalled(true);
-        }
-        if (hiddenIframe) {
-          document.body.removeChild(hiddenIframe);
-        }
-      }, 1000);
+        setTimeout(() => {
+          const elapsedTime = new Date().getTime() - now;
+          setIsAppInstalled(elapsedTime >= 1500);
+        }, 1000);
+      }
     };
 
     checkAppInstalled();
