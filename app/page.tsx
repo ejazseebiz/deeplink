@@ -1,50 +1,69 @@
-
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 
 const APP_SCHEME = "saveseecard://"; // Your app's custom scheme
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.seecard";
-const APP_STORE_URL = "https://apps.apple.com/app/seecard/id6502513661";
-
-// const isAndroid = () => {
-//   if (typeof navigator === "undefined") return false;
-//   return /Android/i.test(navigator.userAgent);
-// };
+const APP_STORE_URL = "https://apps.apple.com/np/app/seecard/id6502513661";
 
 // Function to check if the user is on iOS
 const isiOS = () => {
   if (typeof navigator === "undefined") return false;
   const userAgent = navigator.userAgent || navigator.vendor;
   return (
-    /iPhone|iPad|iPod/.test(userAgent) || 
+    /iPhone|iPad|iPod/.test(userAgent) ||
     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
   );
 };
 
-
 export default function Home() {
-  const [isAppInstalled, setIsAppInstalled] = useState(false);
-  
+  const [isAppInstalled, setIsAppInstalled] = useState<boolean | null>(null);
+  const [instaledApps, setInstalledApps] = useState(null);
+
   useEffect(() => {
+    if (typeof window === "undefined") return; // Ensure code runs only on client
 
-    if (typeof window === "undefined") return; // Ensure code runs only on the client
+    let hasNavigatedAway = false;
+    let timeout: NodeJS.Timeout;
 
-    const checkAppInstalled = () => {
-      const now = new Date().getTime();
-      window.location.href = APP_SCHEME;
-      
-      setTimeout(() => {
-        const elapsedTime = new Date().getTime() - now;
-        if (elapsedTime < 1500) {
-          setIsAppInstalled(false);
-        } else {
-          setIsAppInstalled(true);
-        }
-      }, 1000);
+    const handleBlur = () => {
+      hasNavigatedAway = true; // User left the page
     };
 
-    checkAppInstalled();
+    const handleFocus = () => {
+      if (hasNavigatedAway) {
+        setIsAppInstalled(true); // User returned → app likely opened
+      }
+    };
+
+    window.addEventListener("blur", handleBlur);
+    window.addEventListener("focus", handleFocus);
+
+    if (isiOS()) {
+      // On iOS, use an iframe to avoid Safari errors
+      const hiddenIframe = document.createElement("iframe");
+      hiddenIframe.style.display = "none";
+      hiddenIframe.src = APP_SCHEME;
+      document.body.appendChild(hiddenIframe);
+
+      timeout = setTimeout(() => {
+        document.body.removeChild(hiddenIframe);
+        setIsAppInstalled(hasNavigatedAway);
+      }, 2000);
+    } else {
+      // On Android, try opening the app
+      window.location.href = APP_SCHEME;
+
+      timeout = setTimeout(() => {
+        setIsAppInstalled(hasNavigatedAway);
+      }, 2000);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("focus", handleFocus);
+    };
   }, []);
 
   if (isAppInstalled === null) {
@@ -54,19 +73,18 @@ export default function Home() {
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       {isAppInstalled ? (
-          <a href={APP_SCHEME} style={buttonStyle}>
-            Open App 3
-          </a>
-        ) : (
-          <a href={isiOS() ? APP_STORE_URL : PLAY_STORE_URL} style={buttonStyle}>
-            Install App 3
-          </a>
-        )}
+        <a href={APP_SCHEME} style={buttonStyle}>
+          Open App
+        </a>
+      ) : (
+        <a href={isiOS() ? APP_STORE_URL : PLAY_STORE_URL} style={buttonStyle}>
+          Install App
+        </a>
+      )}
 
-        <p>{isAppInstalled == true ? "App is installed" : "App not installed"}</p>
-        <p>{isiOS() ? 'APP_STORE_URL' : 'PLAY_STORE_URL'}</p>
-        <p>{isAppInstalled}</p>
-
+      <p>{isAppInstalled ? "App is installed" : "App not installed"}</p>
+      <p>{isiOS() ? "APP_STORE_URL" : "PLAY_STORE_URL"}</p>
+      <p>{isAppInstalled.toString()}</p>
     </div>
   );
 }
