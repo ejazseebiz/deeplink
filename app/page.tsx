@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const APP_SCHEME = "saveseecard://"; // Your app's custom scheme
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.seecard";
-const APP_STORE_URL = "https://apps.apple.com/np/app/seecard/id6502513661";
+const APP_STORE_URL = "https://apps.apple.com/app/seecard/id6502513661";
 
 // const isAndroid = () => {
 //   if (typeof navigator === "undefined") return false;
@@ -55,11 +55,11 @@ export default function Home() {
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       {isAppInstalled ? (
           <a href={APP_SCHEME} style={buttonStyle}>
-            Open App 2
+            Open App 3
           </a>
         ) : (
           <a href={isiOS() ? APP_STORE_URL : PLAY_STORE_URL} style={buttonStyle}>
-            Install App 2
+            Install App 3
           </a>
         )}
 
