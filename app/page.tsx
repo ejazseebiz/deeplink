@@ -69,6 +69,13 @@ export default function Home() {
     return <p>Checking app installation...</p>;
   }
 
+  declare global {
+  interface Window {
+    ReactNativeWebView?: {
+      postMessage: (message: string) => void;
+    };
+  }
+}
 
  function shareThis() {
     const data = {
@@ -79,7 +86,12 @@ export default function Home() {
         url: 'https://example.com'
       }
     };
+      if (window.ReactNativeWebView?.postMessage) {
     window.ReactNativeWebView.postMessage(JSON.stringify(data));
+  } else {
+    alert("ReactNativeWebView not available");
+  }
+    // window.ReactNativeWebView.postMessage(JSON.stringify(data));
   }
 
   return (
