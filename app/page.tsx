@@ -16,6 +16,14 @@ const isiOS = () => {
   );
 };
 
+  declare global {
+  interface Window {
+    ReactNativeWebView?: {
+      postMessage: (message: string) => void;
+    };
+  }
+}
+
 export default function Home() {
   const [isAppInstalled, setIsAppInstalled] = useState<boolean | null>(null);
 
@@ -69,13 +77,7 @@ export default function Home() {
     return <p>Checking app installation...</p>;
   }
 
-  declare global {
-  interface Window {
-    ReactNativeWebView?: {
-      postMessage: (message: string) => void;
-    };
-  }
-}
+
 
  function shareThis() {
     const data = {
