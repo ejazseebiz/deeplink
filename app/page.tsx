@@ -1,17 +1,4 @@
 "use client";
-
-import { useEffect } from "react";
-
-// iOS detection (optional, kept for reference)
-const isiOS = () => {
-  if (typeof navigator === "undefined") return false;
-  const userAgent = navigator.userAgent || navigator.vendor;
-  return (
-    /iPhone|iPad|iPod/.test(userAgent) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
-  );
-};
-
 declare global {
   interface Window {
     ReactNativeWebView?: {
