@@ -8,21 +8,35 @@ declare global {
 }
 
 export default function Home() {
-  function shareThis(title: string, message: string, url: string) {
-    const data = {
-      type: 'share',
-      payload: { title, message, url }
-    };
+function shareThis(title: string, message: string, url: string) {
+  const data = {
+    type: 'share',
+    payload: { title, message, url }
+  };
 
+  try {
     if (window.ReactNativeWebView?.postMessage) {
       window.ReactNativeWebView.postMessage(JSON.stringify(data));
     } else if (navigator.share) {
-      navigator.share({ title, text: message, url });
+      navigator
+        .share({ title, text: message, url })
+        .then(() => {
+          console.log("Share successful");
+        })
+        .catch((error) => {
+          if (error.name === "AbortError") {
+            console.log("Share dialog was closed by the user.");
+          } else {
+            console.error("Unexpected error while sharing:", error);
+          }
+        });
     } else {
       prompt('Copy to clipboard:', url);
     }
+  } catch (error) {
+    console.error("Error initiating share:", error);
   }
-
+}
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <button
