@@ -69,6 +69,19 @@ export default function Home() {
     return <p>Checking app installation...</p>;
   }
 
+
+ function shareThis() {
+    const data = {
+      type: 'share',
+      payload: {
+        title: 'Check this out!',
+        message: 'This is a great website.',
+        url: 'https://example.com'
+      }
+    };
+    window.ReactNativeWebView.postMessage(JSON.stringify(data));
+  }
+
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       {isAppInstalled ? (
@@ -84,6 +97,9 @@ export default function Home() {
       <p>{isAppInstalled ? "App is installed" : "App not installed"}</p>
       <p>{isiOS() ? "APP_STORE_URL" : "PLAY_STORE_URL"}</p>
       <p>{isAppInstalled.toString()}</p>
+      <p>
+      <button onClick={shareThis}>Share</button>
+      </p>
     </div>
   );
 }
