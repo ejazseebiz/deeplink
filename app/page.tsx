@@ -7,8 +7,29 @@ declare global {
   }
 }
 
+  const isIOS = () => {
+    const userAgent = navigator.userAgent || navigator.vendor;
+    return (
+      /iPhone|iPad|iPod/.test(userAgent) || 
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+    );
+  };
+  
+
 export default function Home() {
-function shareThis(title: string, message: string, url: string) {
+
+const handleShare = async () => {
+    try {
+      // const link = purchaseRound?.purchase_round_link.split("?")[1];
+      // await navigator.clipboard.writeText(`${window.location.href}?${link}`);
+      await navigator.clipboard.writeText("${window.location.href}?${link}");
+      alert("Link copied to clipboard!");
+    } catch (err) {
+      alert("Failed to copy link.");
+    }
+  };
+
+const shareThis = (title: string, message: string, url: string) => {
   const data = {
     type: 'share',
     payload: { title, message, url }
@@ -17,7 +38,7 @@ function shareThis(title: string, message: string, url: string) {
   try {
     if (window.ReactNativeWebView?.postMessage) {
       window.ReactNativeWebView.postMessage(JSON.stringify(data));
-    } else if (navigator.share) {
+    } else if (isIOS() && navigator.share) {
       navigator
         .share({ title, text: message, url })
         .then(() => {
@@ -31,10 +52,11 @@ function shareThis(title: string, message: string, url: string) {
           }
         });
     } else {
-      prompt('Copy to clipboard:', url);
+      handleShare();
     }
   } catch (error) {
     console.error("Error initiating share:", error);
+    handleShare();
   }
 }
   return (
@@ -50,6 +72,15 @@ function shareThis(title: string, message: string, url: string) {
         style={buttonStyle}
       >
         Share
+      </button>
+
+            <button
+        onClick={() =>
+          handleShare()
+        }
+        style={buttonStyle}
+      >
+        Copy
       </button>
     </div>
   );
