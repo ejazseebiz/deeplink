@@ -25,7 +25,7 @@ const handleShare = async () => {
       await navigator.clipboard.writeText("${window.location.href}?${link}");
       alert("Link copied to clipboard!");
     } catch (err) {
-      alert("Failed to copy link.");
+      console.log("Failed to copy link.", err);
     }
   };
 
