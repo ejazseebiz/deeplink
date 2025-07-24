@@ -82,9 +82,9 @@ const shareThis = (title: string, message: string, url: string) => {
       >
         Copy
       </button>
+<br />
 
-
-      <a href="https://card.seebiz.com/rizwanwork-559E476088"></a>
+      <a href="https://card.seebiz.com/rizwanwork-559E476088">Open Link</a>
     </div>
   );
 }
