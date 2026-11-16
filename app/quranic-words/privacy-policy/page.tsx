@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { PolicyLayout } from "./PolicyLayout";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy – Unit Converter",
-  description: "Privacy Policy for the Unit Converter app by Ejaz Ahmad.",
+  title: "Privacy Policy – Quranic Words",
+  description: "Privacy Policy for the Quranic Words app.",
 };
 
-export default function PrivacyPolicyEn() {
+export default function PrivacyPolicy() {
   return (
-    <PolicyLayout lang="en" title="Privacy Policy">
+    <main className="mx-auto max-w-3xl px-5 py-10 leading-relaxed">
+      <h1 className="mb-6 text-3xl font-bold">Quranic Words – Privacy Policy</h1>
+      <div className="space-y-4 [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-semibold [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-6 [&_a]:text-blue-600 [&_a]:underline dark:[&_a]:text-blue-400">
       <p>
-        Ejaz Ahmad built the Unit Converter app as a Free app. This SERVICE is provided by Ejaz Ahmad at no
-        cost and is intended for use as is.
+        Quranic Words is a free app. This SERVICE is provided at no cost and is intended for use as is.
       </p>
       <p>
         This page is used to inform visitors regarding my policies with the collection, use, and disclosure
@@ -25,7 +25,7 @@ export default function PrivacyPolicyEn() {
       </p>
       <p>
         The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which are
-        accessible at Unit Converter unless otherwise defined in this Privacy Policy.
+        accessible at Quranic Words unless otherwise defined in this Privacy Policy.
       </p>
 
       <h2>Information Collection and Use</h2>
@@ -128,6 +128,7 @@ export default function PrivacyPolicyEn() {
         If you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me at{" "}
         <a href="mailto:eejazzahmad@gmail.com">eejazzahmad@gmail.com</a>.
       </p>
-    </PolicyLayout>
+      </div>
+    </main>
   );
 }
