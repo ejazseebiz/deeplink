@@ -126,7 +126,7 @@ export default function PrivacyPolicy() {
       <h2>Contact Us</h2>
       <p>
         If you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me at{" "}
-        <a href="mailto:eejazzahmad@gmail.com">eejazzahmad@gmail.com</a>.
+        <a href="mailto:ejaz.seebiz@gmail.com">ejaz.seebiz@gmail.com</a>.
       </p>
       </div>
     </main>
